@@ -1,0 +1,14 @@
+[package]
+name = "cargo-prune-features"
+version = "0.0.0"
+edition = "2021"
+description = "Find unused enabled feature flags and prune them."
+authors = ["T. Post"]
+homepage = "https://github.com/TimonPost/cargo-prune-features"
+repository = "https://github.com/TimonPost/cargo-prune-features"
+documentation = "https://docs.rs/cargo-prune-features/"
+license = "MIT"
+keywords = ["feature", "cargo", "remove", "prune", "cli"]
+readme = "README.md"
+exclude = ["target", "Cargo.lock"]
+categories = ["command-line-utilities", "command-line-interface", "development-tools", "development-tools::cargo-plugins"]
