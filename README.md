@@ -14,7 +14,7 @@ Use `cargo unused-features --help` to fetch more details about available subcomm
 
 # 2. How to use
 
-Run `cargo install unused-features` or download the binary and build it your self.
+Run `cargo install cargo-unused-features` or download the binary and build it your self.
 
 1. Step Analyzing enabled unused features.
 
