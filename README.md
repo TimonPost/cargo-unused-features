@@ -64,7 +64,7 @@ Finally, this library also has the option to apply all suggestions automatically
 
 - Sometimes feature flags can turn logic on and off without breaking the compilation and therefore this tool can mark a feature flag as removable, but essentially it would change the internal logic of a library. For this reason, this library offers 3 phases. Analyze, automatically apply suggestions, and generate a report. If you want to be more carefully inspect the HTML report to see more clearly what suggestions are given and manually update the dependencies yourself. 
 - Given crate A and B, B depends on A and uses logic from a dependency of A that is hidden behind a feature flag enabled in A, but A itself does not use this code. In this scenario, the feature flag can be removed for A but not for B. So this can result in a false positive. I would recommend going through the suggestions on a crate by crate basis, or just running it on the full workspace, and fixing the compilation errors by adding the removed features. 
-- Feature flags may depend on the target. This project does not compile for each target, but instead, you can specify the target with `--target x` to the `cargo unused-features` command.
+- Feature flags may only be used for a certain target-os. This project does not compile for each target, but instead, you can specify the target with `--target x` to the `cargo unused-features` command.
 
 # 5. Report Bug
 
