@@ -14,13 +14,13 @@ Use `cargo unused-features --help` to fetch more details about available subcomm
 
 # 2. How to use
 
-Run `cargo install cargo-unused-features` or download the binary and build it your self.
+Run `cargo install cargo-unused-features` or download the library and build it yourself.
 
 1. Step Analyzing enabled unused features.
 
 
-```
-cd path/to/project
+```bash
+cd C:/some_path/
 cargo unused-features analyze
 ```
 
@@ -32,8 +32,8 @@ You can generate a simple HTML report from the json to make it easier to inspect
 
 <img src="docs/readme-1.jpg" />
 
-```
-cargo unused-features build-report --input "C:/some_path/to/project/report.json"
+```bash
+cargo unused-features build-report --input "C:/some_path/report.json"
 ```
 
 After it finished running, check the `report.html` in the project directory. You can choose to manually fix your dependencies or use the command in the next step.
@@ -42,8 +42,8 @@ After it finished running, check the `report.html` in the project directory. You
 
 It is possible to auto-apply the findings of the first command. But keep in mind the [disclaimers](#4-some-things-to-keep-in-mind).
 
-```
-cargo unused-features prune --input "C:/some_path/to/project/report.json"
+```bash
+cargo unused-features prune --input "C:/some_path/report.json"
 ```
 
 # 3. How it Works
