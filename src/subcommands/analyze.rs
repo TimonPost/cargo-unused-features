@@ -10,12 +10,12 @@ use clap::Parser;
 #[derive(Parser, Debug, Clone, Default)]
 #[clap(author, version, about, long_about = None)]
 pub struct AnalyzeCommand {
-    /// The root 'directory' of the toml project or workspace.
+    /// The absolute root 'directory' of the toml project or workspace.
     /// If not specified it will take the current executable directory.
     #[clap(short = 'w', long = "workspace", value_parser)]
     pub workspace: Option<String>,
 
-    /// The report 'directory' to which the report will be written.
+    /// The absolute report 'directory' path to which the report will be written.
     /// If not specified it will be written to the current executable directory.
     #[clap(short = 'r', long = "report-dir", value_parser)]
     pub report_dir: Option<String>,
