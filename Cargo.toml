@@ -1,14 +1,35 @@
 [package]
-name = "cargo-prune-features"
+name = "cargo-unused-features"
 version = "0.0.0"
 edition = "2021"
 description = "Find unused enabled feature flags and prune them."
 authors = ["T. Post"]
-homepage = "https://github.com/TimonPost/cargo-prune-features"
-repository = "https://github.com/TimonPost/cargo-prune-features"
-documentation = "https://docs.rs/cargo-prune-features/"
+homepage = "https://github.com/TimonPost/cargo-unused-features"
+repository = "https://github.com/TimonPost/cargo-unused-features"
+documentation = "https://docs.rs/cargo-unused-features/"
 license = "MIT"
 keywords = ["feature", "cargo", "remove", "prune", "cli"]
 readme = "README.md"
 exclude = ["target", "Cargo.lock"]
 categories = ["command-line-utilities", "command-line-interface", "development-tools", "development-tools::cargo-plugins"]
+
+[dependencies]
+serde_json = { version="1.0", default-features = false}
+cargo = { version="0.63.1", default-features = false}
+cargo_toml= { version="0.11.5", default-features = false }
+toml= { version="0.5.9" , default-features = false }
+serde= { version="1.0" , default-features = false }
+cargo_metadata = {version="0.15.0", default-features = false }
+toml_edit = {  version = "0.14.4", default-features = false }
+anyhow = {version = "1.0.58", default-features = false }
+clap = { version="3.2.10", default-features = false, features=["derive"] }
+log = { version = "0.4", default-features = false }
+env_logger= { version = "0.9"}
+
+[lib]
+name = "cargo_unused_features_lib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "cargo_unused_features"
+path = "src/main.rs"

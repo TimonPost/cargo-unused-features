@@ -1,4 +1,4 @@
-<h1 align="center"><img width="350" src="logo.png" /></h1>
+<h1 align="center"><img width="350" src="docs/logo.png" /></h1>
 
 <div align="center">
 
@@ -6,45 +6,47 @@
 
 </div>
 
-# Unused enabled feature flag pruner.
+# 1. Unused enabled feature flag pruner.
 
 This cargo tool allows you to find and prune enabled, but, unused feature flags from your project.
 
-There are three subcommands in this library:
+Use `cargo unused-features --help` to fetch more details about available subcommands and their configurations.
 
-Use `cargo purge-features --help` to fetch more details about available subcommands and their configurations.
+# 2. How to use
 
-# How to use
-
-Run `cargo install purge-features` or download the binary and build it your self.
+Run `cargo install unused-features` or download the binary and build it your self.
 
 1. Step Analyzing enabled unused features.
 
+
 ```
-cargo purge-features analyze --workspace "C:/some_path/to/project" --report "C:/some_path/to/project/report.json"
+cd path/to/project
+cargo unused-features analyze
 ```
 
-After it finished running, check the `report.json` and use this for the next two steps.
+After it finished running, check the `report.json` in the project directory and use this for the next two steps.
 
-2. Generating a HTML report. (optional)
+1. Generating a HTML report. (optional)
 
 You can generate a simple HTML report from the json to make it easier to inspect results. 
 
+<img src="docs/readme-1.jpg" />
+
 ```
-cargo purge-features build-report --input "C:/some_path/to/project/report.json" --output "C:/some_path/to/project/report.html"
+cargo unused-features build-report --input "C:/some_path/to/project/report.json"
 ```
 
-You can choose to manually fix your dependencies or use the command in the next step.
+After it finished running, check the `report.html` in the project directory. You can choose to manually fix your dependencies or use the command in the next step.
 
 3. Applying suggested removals of feature flags.
 
-It is possible to auto-apply the findings of the first command. But keep in mind the disclaimers. 
+It is possible to auto-apply the findings of the first command. But keep in mind the [disclaimers](#4.-some-things-to-keep-in-mind).
 
 ```
-cargo purge-features purge --input "C:/some_path/to/project/report.json"
+cargo unused-features prune --input "C:/some_path/to/project/report.json"
 ```
 
-# How it Works
+# 3. How it Works
 
 This library works for both workspaces and individual crates. In the context of a workspace it will just iterate each crate in the workspace-definition and run the same process it does for a single crate. 
 
@@ -54,26 +56,28 @@ Furthermore, This library uses [cargo_toml][6] to remove or add features. It loa
 
 But before doing all of that, we need to know which features to remove in the first case. This library uses [cargo-metadata][7] to collect all enabled features from the dependencies. Features can be enabled in several ways. Manually by `features = ['x', 'y']` tag, or by the `default-features=false/true` tag. Also, features can enable 0-n other features e.g `default=[x,y]`. So, this library collects all enabled features, whether they are implicitly or explicitly enabled. After it collects all enabled features for a dependency, it will remove them one-by-one and compile the project as described above.
 
-During the process, a json report is updated for each crate to ensure that if it crashes the progress is not lost. Use the `cargo prune-features build-report` command to visualize this report.
+During the process, a json report is updated for each crate to ensure that if it crashes the progress is not lost. Use the `cargo unused-features build-report` command to visualize this report.
 
-Finally, this library also has the option to apply all suggestions automatically by running `cargo prune-features apply` command. For this task, [toml-edit][8] is used because it doesn't mess with formatting, comments, and spaces, in the TOML-file.
+Finally, this library also has the option to apply all suggestions automatically by running `cargo unused-features prune` command. For this task, [toml-edit][8] is used because it doesn't mess with formatting, comments, and spaces, in the TOML-file.
 
-# Some things to keep in mind
+# 4. Some things to keep in mind
 
 - Sometimes feature flags can turn logic on and off without breaking the compilation and therefore this tool can mark a feature flag as removable, but essentially it would change the internal logic of a library. For this reason, this library offers 3 phases. Analyze, automatically apply suggestions, and generate a report. If you want to be more carefully inspect the HTML report to see more clearly what suggestions are given and manually update the dependencies yourself. 
 - Given crate A and B, B depends on A and uses logic from a dependency of A that is hidden behind a feature flag enabled in A, but A itself does not use this code. In this scenario, the feature flag can be removed for A but not for B. So this can result in a false positive. I would recommend going through the suggestions on a crate by crate basis, or just running it on the full workspace, and fixing the compilation errors by adding the removed features. 
-- Feature flags may depend on the target. This project does not compile for each target, but instead you can specify the target with `--target x` to the `cargo purge-features` command. 
+- Feature flags may depend on the target. This project does not compile for each target, but instead, you can specify the target with `--target x` to the `cargo unused-features` command.
 
-# Report Bug
+# 5. Report Bug
 
-This tool is very new, and one can expect problems. If you have problems, please open an issue with the problematic `Cargo.toml` file. That allows me to quickly debug the permutation process.
+This tool is very new, and one can expect problems. If you have problems, please do the following:
+1. Open an issue with the problematic `Cargo.toml` file. 
+2. Provide the `--log debug` flag to the `cargo-unused-features` command and post the logs in the issue as well.
 
-[1a]: https://img.shields.io/crates/v/cargo-prune-features.svg
-[1b]: https://img.shields.io/crates/v/cargo-prune-features.svg
+[1a]: https://img.shields.io/crates/v/cargo-unused-features.svg
+[1b]: https://img.shields.io/crates/v/cargo-unused-features.svg
 [2a]: https://img.shields.io/badge/license-MIT-blue.svg
 [2b]: ./LICENSE
-[3a]: https://docs.rs/cargo-prune-features/badge.svg
-[3b]: https://docs.rs/cargo-prune-features/
+[3a]: https://docs.rs/cargo-unused-features/badge.svg
+[3b]: https://docs.rs/cargo-unused-features/
 [6]: https://crates.io/crates/cargo_toml
 [7]: https://crates.io/crates/cargo_metadata
 [8]: https://crates.io/crates/toml_edit
