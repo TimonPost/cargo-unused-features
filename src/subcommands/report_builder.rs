@@ -160,7 +160,7 @@ fn dependencies_table(dependency_rows: String) -> String {
             <th>Dependency</th>
             <th>Original</th>
             <th>Potential Removable</th>
-            <th>Potential Unremovable</th>
+            <th>Unremovable</th>
         </tr>
         {}
         </table>       

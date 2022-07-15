@@ -6,13 +6,13 @@
 
 </div>
 
-# 1. Unused enabled feature flag pruner.
+# Potential unused, enabled feature flag finder and pruner.
 
-This cargo tool allows you to find and prune enabled, but, unused feature flags from your project.
+This cargo tool allows you to find and prune enabled, but, [potentially](#3-some-things-to-keep-in-mind) unused feature flags from your project.
 
 Use `cargo unused-features --help` to fetch more details about available subcommands and their configurations.
 
-# 2. How to use
+# 1. How to use
 
 Run `cargo install cargo-unused-features` or download the library and build it yourself.
 
@@ -40,17 +40,17 @@ After it finished running, check the `report.html` in the project directory. You
 
 3. Applying suggested removals of feature flags.
 
-It is possible to auto-apply the findings of the first command. But keep in mind the [disclaimers](#4-some-things-to-keep-in-mind).
+It is possible to auto-apply the findings of the first command. But keep in mind the [disclaimers](#3-some-things-to-keep-in-mind).
 
 ```bash
 cargo unused-features prune --input "C:/some_path/report.json"
 ```
 
-# 3. How it Works
+# 2. How it Works
 
 This library works for both workspaces and individual crates. In the context of a workspace it will just iterate each crate in the workspace-definition and run the same process it does for a single crate. 
 
-For a single crate it removes a feature of a dependency and then compiles the project to see if it still compiles. If it does, the feature flag can possibly be removed, but it can be a false-positve ([disclaimers](#4-some-things-to-keep-in-mind).). Yes, recompiling for every feature-flag implies some overhead. However, this is a one-time thing and if you have a large project, just let it run for a while. I personally have ran it on a project with over 50 crates and it finished within an hour. The compiler will not perform a complete clean rebuild which is in our favor.
+For a single crate it removes a feature of a dependency and then compiles the project to see if it still compiles. If it does, the feature flag can possibly be removed, but it can be a false-positve ([disclaimers](#3-some-things-to-keep-in-mind).). Yes, recompiling for every feature-flag implies some overhead. However, this is a one-time thing and if you have a large project, just let it run for a while. I personally have ran it on a project with over 50 crates and it finished within an hour. The compiler will not perform a complete clean rebuild which is in our favor.
 
 Furthermore, This library uses [cargo_toml][6] to remove or add features. It loads a TOML file into memory, modifies the dependency features, serializes the `Manifest`, and writes it back to the toml-file. Then it starts compiling, and after it finishes running, the original content is written back as if nothing had happened.
 
@@ -60,17 +60,22 @@ During the process, a json report is updated for each crate to ensure that if it
 
 Finally, this library also has the option to apply all suggestions automatically by running `cargo unused-features prune` command. For this task, [toml-edit][8] is used because it doesn't mess with formatting, comments, and spaces, in the TOML-file.
 
-# 4. Some things to keep in mind
+# 3. Some things to keep in mind
 
 - Sometimes feature flags can turn logic on and off without breaking the compilation and therefore this tool can mark a feature flag as removable, but essentially it would change the internal logic of a library. For this reason, this library offers 3 phases. Analyze, automatically apply suggestions, and generate a report. If you want to be more carefully inspect the HTML report to see more clearly what suggestions are given and manually update the dependencies yourself. 
 - Given crate A and B, B depends on A and uses logic from a dependency of A that is hidden behind a feature flag enabled in A, but A itself does not use this code. In this scenario, the feature flag can be removed for A but not for B. So this can result in a false positive. I would recommend going through the suggestions on a crate by crate basis, or just running it on the full workspace, and fixing the compilation errors by adding the removed features. 
 - Feature flags may only be used for a certain target-os. This project does not compile for each target, but instead, you can specify the target with `--target x` to the `cargo unused-features` command.
 
-# 5. Report Bug
+# 4. Report Bug
 
 This tool is very new, and one can expect problems. If you have problems, please do the following:
+
 1. Open an issue with the problematic `Cargo.toml` file. 
 2. Provide the `--log debug` flag to the `cargo-unused-features` command and post the logs in the issue as well.
+
+# Future
+
+Would be nice to find ways to be more certain about when a feature can be removed. Potentially we would need to do some regex matches with features in the dependency code base and see how the feature is used. And with that get a more precise assumption. If you have an idea, feel free to open an issue or reach out to me!
 
 [1a]: https://img.shields.io/crates/v/cargo-unused-features.svg
 [1b]: https://img.shields.io/crates/v/cargo-unused-features.svg

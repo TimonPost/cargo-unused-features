@@ -1,6 +1,6 @@
 [package]
 name = "cargo-unused-features"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Find unused enabled feature flags and prune them."
 authors = ["T. Post"]
