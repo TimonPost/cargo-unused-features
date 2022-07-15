@@ -50,7 +50,7 @@ cargo unused-features prune --input "C:/some_path/to/project/report.json"
 
 This library works for both workspaces and individual crates. In the context of a workspace it will just iterate each crate in the workspace-definition and run the same process it does for a single crate. 
 
-For a single crate. it removes a feature of a dependency and then compiles the project to see if it still compiles. If so, we can 'believe' that the feature can be removed. Yes, this implies some overhead by recompiling the project for each feature flag enabled. However, this is a one-time thing and if you have a large project, just let it run for a while. I personally have ran it on a project with over 50 crates and it finished within an hour. The compiler will not perform a complete clean rebuild which is in our favor.
+For a single crate. it removes a feature of a dependency and then compiles the project to see if it still compiles. If so, the feature flag might be removed, but it can still be a false-positve ([disclaimers](#4-some-things-to-keep-in-mind).). Yes, this implies some overhead by recompiling the project for each feature flag enabled. However, this is a one-time thing and if you have a large project, just let it run for a while. I personally have ran it on a project with over 50 crates and it finished within an hour. The compiler will not perform a complete clean rebuild which is in our favor.
 
 Furthermore, This library uses [cargo_toml][6] to remove or add features. It loads a TOML file into memory, modifies the dependency features, serializes the `Manifest`, and writes it back to the toml-file. Then it starts compiling, and after it finishes running, the original content is written back as if nothing had happened.
 
