@@ -1,6 +1,6 @@
 [package]
 name = "cargo-unused-features"
-version = "0.0.0"
+version = "0.1.0"
 edition = "2021"
 description = "Find unused enabled feature flags and prune them."
 authors = ["T. Post"]
@@ -24,11 +24,7 @@ toml_edit = {  version = "0.14.4", default-features = false }
 anyhow = {version = "1.0.58", default-features = false }
 clap = { version="3.2.10", default-features = false, features=["derive"] }
 log = { version = "0.4", default-features = false }
-env_logger= { version = "0.9"}
-
-[lib]
-name = "cargo_unused_features_lib"
-path = "src/lib.rs"
+env_logger= { version = "0.9", default-features = false }
 
 [[bin]]
 name = "cargo_unused_features"

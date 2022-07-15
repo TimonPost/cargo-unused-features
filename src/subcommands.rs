@@ -1,10 +1,10 @@
 pub mod analyze;
-pub mod remove;
+pub mod prune;
 pub mod report_builder;
 
 use clap::Parser;
 
-use self::{analyze::AnalyzeCommand, remove::PurgeCommand, report_builder::ReportBuildingCommand};
+use self::{analyze::AnalyzeCommand, prune::Prune, report_builder::ReportBuildingCommand};
 
 #[derive(Parser)]
 #[clap(name = "cargo")]
@@ -12,7 +12,7 @@ use self::{analyze::AnalyzeCommand, remove::PurgeCommand, report_builder::Report
 pub enum UnusedFeatures {
     Analyze(AnalyzeCommand),
     BuildReport(ReportBuildingCommand),
-    Prune(PurgeCommand),
+    Prune(Prune),
 }
 
 impl UnusedFeatures {

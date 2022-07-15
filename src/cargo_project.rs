@@ -15,12 +15,11 @@ use cargo::{
     Config,
 };
 use cargo_metadata::Metadata;
-use cargo_toml::DependencyDetail;
 
 use crate::{create_dependencies::CrateDependencies, subcommands::analyze::AnalyzeCommand};
 
 /// In-memory toml file.
-pub struct Toml {
+pub struct CargoProject {
     /// The original toml file contents.
     original: String,
     /// The directory of the toml file.
@@ -35,7 +34,7 @@ pub struct Toml {
     config: AnalyzeCommand,
 }
 
-impl Toml {
+impl CargoProject {
     pub fn new(directory: &Path, config: AnalyzeCommand) -> anyhow::Result<Self> {
         let toml_path = directory.join("Cargo.toml");
 
@@ -55,7 +54,7 @@ impl Toml {
 
         let is_workspace = in_memory_toml.workspace.is_some();
 
-        Ok(Toml {
+        Ok(CargoProject {
             original: toml_contents,
             directory: Box::from(directory),
             toml_path: toml_path.into_boxed_path(),
@@ -379,7 +378,7 @@ impl Toml {
     }
 }
 
-impl Drop for Toml {
+impl Drop for CargoProject {
     fn drop(&mut self) {
         // By default we reset the toml always after we mutated it for analyzing purposes.
         // Could be made optional later.

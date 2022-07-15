@@ -55,6 +55,7 @@ impl Report {
         }
     }
 
+    /// Serializes and flushes the report to the given path.
     pub fn flush(&self, path: &Path) -> anyhow::Result<()> {
         log::debug!("Write report to {}.", path.display());
         let report = serde_json::to_string_pretty(&self)?;

@@ -1,8 +1,8 @@
 use std::path::Path;
 
 use crate::{
-    create_dependencies::CrateDependencies, feature_buffer::DependencyFeaturePermutator,
-    loaded_toml::Toml, report::WorkspaceCrate, utils, Report,
+    cargo_project::CargoProject, create_dependencies::CrateDependencies,
+    feature_buffer::DependencyFeaturePermutator, report::WorkspaceCrate, utils, Report,
 };
 use clap::Parser;
 
@@ -10,12 +10,12 @@ use clap::Parser;
 #[derive(Parser, Debug, Clone, Default)]
 #[clap(author, version, about, long_about = None)]
 pub struct AnalyzeCommand {
-    /// The root directory of the toml project or workspace.
+    /// The root 'directory' of the toml project or workspace.
     /// If not specified it will take the current executable directory.
     #[clap(short = 'w', long = "workspace", value_parser)]
     pub workspace: Option<String>,
 
-    /// The report directory to which the report will be written.
+    /// The report 'directory' to which the report will be written.
     /// If not specified it will be written to the current executable directory.
     #[clap(short = 'r', long = "report-dir", value_parser)]
     pub report_dir: Option<String>,
@@ -65,7 +65,7 @@ impl AnalyzeCommand {
 
         let crate_path = Path::new(&workspace_path);
 
-        match Toml::new(crate_path, self.clone()) {
+        match CargoProject::new(crate_path, self.clone()) {
             Ok(root_toml) => {
                 if root_toml.is_workspace() {
                     log::debug!("Workspace detected, iterating over workspace crates...");
@@ -75,7 +75,7 @@ impl AnalyzeCommand {
                     for member_path in root_toml.workspace_members() {
                         log::debug!("Processing '{}' crate ...", member_path.display());
 
-                        match Toml::new(&member_path, self.clone()) {
+                        match CargoProject::new(&member_path, self.clone()) {
                             Ok(workspace_member) => {
                                 find_unused_crate_features(workspace_member, &mut report)
                             }
@@ -104,13 +104,13 @@ impl AnalyzeCommand {
     }
 }
 
-pub fn find_unused_crate_features(toml_crate: Toml, report: &mut Report) {
+pub fn find_unused_crate_features(toml_crate: CargoProject, report: &mut Report) {
     if let Err(e) = find_unused_features(toml_crate, report) {
         log::error!("Error while looking for unused features. {e}");
     }
 }
 
-pub fn find_unused_features(mut toml: Toml, report: &mut Report) -> anyhow::Result<()> {
+pub fn find_unused_features(mut toml: CargoProject, report: &mut Report) -> anyhow::Result<()> {
     let crate_dependency = toml.gather_meta_data();
 
     permutate_features(crate_dependency, &mut toml, report)?;
@@ -120,7 +120,7 @@ pub fn find_unused_features(mut toml: Toml, report: &mut Report) -> anyhow::Resu
 
 fn permutate_features(
     crate_deps: CrateDependencies,
-    toml: &mut Toml,
+    toml: &mut CargoProject,
     final_report: &mut Report,
 ) -> anyhow::Result<()> {
     let total_features: f32 = crate_deps
