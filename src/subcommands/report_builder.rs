@@ -90,7 +90,7 @@ fn totals_overview_table(
        <tr>
            <th>Total Crates</th>
            <th>Total Features</th>
-           <th>Total Removable Features</th>
+           <th>Total Potential Removable Features</th>
        </tr>
        <tr>
         <td>{}</td>
@@ -156,8 +156,8 @@ fn dependencies_table(dependency_rows: String) -> String {
         <tr>
             <th>Dependency</th>
             <th>Original</th>
-            <th>Removable</th>
-            <th>Unremovable</th>
+            <th>Potential Removable</th>
+            <th>Potential Unremovable</th>
         </tr>
         {}
         </table>       
