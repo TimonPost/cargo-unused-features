@@ -104,15 +104,20 @@ fn totals_overview_table(
 }
 
 fn collapsable_header(table: String, crate_name: String, full_path: String) -> String {
-    format!(
+    let a = format!(
         " 
         <button type='button' class='collapsible'><h3>{}</h3></button>
-        <div  class='content'>
-            <i style='margin-: 5px' class=\"styled-table\">{}</i>
+        <div class='content'>
+            <i style='margin: 5px' class='styled-table'>{}</i>
             {}
         </div>",
         crate_name, full_path, table
-    )
+    );
+
+    println!("{}", table);
+    println!("{}", a);
+
+    a
 }
 
 fn dependency_html_table(crate_name: String, dependency: ReportDependencyEntry) -> String {
@@ -152,16 +157,15 @@ fn dependency_html_table(crate_name: String, dependency: ReportDependencyEntry) 
 fn dependencies_table(dependency_rows: String) -> String {
     format!(
         "
-    <table class=\"styled-table\">
-       <tr>
-           <th>Dependency</th>
-           <th>Original</th>
-           <th>Removable</th>
-           <th>Unremovable</th>
-       </tr>
-       <tr>
-           {}
-       </tr>
+        <table class=\"styled-table\">
+        <tr>
+            <th>Dependency</th>
+            <th>Original</th>
+            <th>Removable</th>
+            <th>Unremovable</th>
+        </tr>
+        {}
+        </table>       
        ",
         dependency_rows
     )

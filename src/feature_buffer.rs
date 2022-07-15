@@ -51,7 +51,7 @@ impl DependencyFeaturePermutator {
 
     /// Removes a feature from the dependency.
     pub fn remove_feature(&mut self) -> String {
-        assert!(self.tmp_features.is_empty());
+        assert!(!self.tmp_features.is_empty());
         self.tmp_features.remove(self.tmp_features.len() - 1)
     }
 }

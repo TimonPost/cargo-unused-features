@@ -47,7 +47,7 @@ pub struct AnalyzeCommand {
     #[clap(short = 's', long = "skip")]
     pub skip_dependencies: Vec<String>,
     /// The log level (debug, info, warn, error, off). Defaults to info.
-    #[clap(short = 'l', long = "l")]
+    #[clap(short = 'l', long = "log-level", value_parser)]
     pub log_level: Option<String>,
 }
 
