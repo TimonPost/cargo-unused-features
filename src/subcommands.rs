@@ -7,8 +7,6 @@ use clap::Parser;
 use self::{analyze::AnalyzeCommand, prune::PruneCommand, report_builder::ReportBuildingCommand};
 
 #[derive(Parser)]
-#[clap(name = "cargo")]
-#[clap(bin_name = "cargo")]
 pub enum UnusedFeatures {
     Analyze(AnalyzeCommand),
     BuildReport(ReportBuildingCommand),

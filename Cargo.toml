@@ -1,6 +1,6 @@
 [package]
 name = "cargo-unused-features"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Find unused enabled feature flags and prune them."
 authors = ["T. Post"]
@@ -27,5 +27,5 @@ log = { version = "0.4", default-features = false }
 env_logger= { version = "0.9", default-features = false }
 
 [[bin]]
-name = "cargo_unused_features"
+name = "cargo-unused-features"
 path = "src/main.rs"
