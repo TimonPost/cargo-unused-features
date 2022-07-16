@@ -1,5 +1,5 @@
 use clap::Parser;
-use subcommands::UnusedFeatures;
+use subcommands::{Cargo};
 
 mod cargo_project;
 mod create_dependencies;
@@ -17,7 +17,7 @@ pub use in_memory_toml::TomlInMemory;
 pub use report::{Report, ReportDependencyEntry, WorkspaceCrate};
 
 fn main() {
-    let subcommand = UnusedFeatures::parse();
+    let subcommand = Cargo::parse();
     match subcommand.execute() {
         Ok(_) => {}
         Err(e) => {

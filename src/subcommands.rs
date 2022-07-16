@@ -2,23 +2,26 @@ pub mod analyze;
 pub mod prune;
 pub mod report_builder;
 
-use clap::Parser;
+use clap::{Parser, Subcommand, SubCommand};
 
 use self::{analyze::AnalyzeCommand, prune::PruneCommand, report_builder::ReportBuildingCommand};
 
 #[derive(Parser)]
-pub enum UnusedFeatures {
+#[clap(author, version, about, long_about = None)]
+#[clap(name = "cargo")]
+#[clap(bin_name = "cargo")]
+pub enum Cargo {
     Analyze(AnalyzeCommand),
     BuildReport(ReportBuildingCommand),
     Prune(PruneCommand),
 }
 
-impl UnusedFeatures {
+impl Cargo {
     pub fn execute(self) -> anyhow::Result<()> {
         match self {
-            UnusedFeatures::Analyze(args) => args.execute(),
-            UnusedFeatures::BuildReport(args) => args.execute(),
-            UnusedFeatures::Prune(args) => args.execute(),
+            Cargo::Analyze(args) => args.execute(),
+            Cargo::BuildReport(args) => args.execute(),
+            Cargo::Prune(args) => args.execute(),
         }
     }
 }

@@ -4,11 +4,11 @@ use crate::{
     cargo_project::CargoProject, create_dependencies::CrateDependencies,
     feature_buffer::DependencyFeaturePermutator, report::WorkspaceCrate, utils, Report,
 };
-use clap::Parser;
+use clap::{Parser, Args};
 
 /// Analyzes the workspace for unused, but, enabled feature flags.
-#[derive(Parser, Debug, Clone, Default)]
-#[clap(author, version, about)]
+#[derive(Args,Debug, Clone, Default)]
+#[clap(author, version)]
 #[clap(setting = clap::AppSettings::DeriveDisplayOrder)]
 pub struct AnalyzeCommand {
     /// The absolute root 'directory' of the toml project or workspace.
