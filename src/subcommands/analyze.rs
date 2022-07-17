@@ -36,6 +36,10 @@ pub struct AnalyzeCommand {
     #[clap(long = "lib", action, default_value_t = true)]
     pub build_lib: bool,
 
+    /// Build all binary targets. Enabled by default.
+    #[clap(long = "bins", action, default_value_t = true)]
+    pub build_bins: bool,
+
     /// What target should be used for the cargo build process.
     /// Defaults to the current target.
     #[clap(short = 't', long = "target", value_parser)]
@@ -49,9 +53,6 @@ pub struct AnalyzeCommand {
     /// Build all example targets.
     #[clap(long = "examples", action)]
     pub build_examples: bool,
-    /// Build all binary targets.
-    #[clap(long = "bins", action)]
-    pub build_bins: bool,
 }
 
 impl AnalyzeCommand {

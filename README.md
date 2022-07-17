@@ -18,6 +18,7 @@ Run `cargo install cargo-unused-features` or download the library and build it y
 
 1. Step Analyzing enabled unused features.
 
+*You can control the compilation by supplying `--bin, --lib, --examples, --benches, --tests` flags. By default, libraries and binaries are compiled. If you want tests, examples, benches, be compiled in the analysis, make sure to supply the corresponding tags.*
 
 ```bash
 cd C:/some_path/
