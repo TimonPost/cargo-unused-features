@@ -1,9 +1,9 @@
-//! A bit dirty, but quick way to generate an HTML report. 
+//! A bit dirty, but quick way to generate an HTML report.
 //! Feel free to make your own report from the json definition :).
 
 use std::{fs, path::Path};
 
-use clap::{Parser, Args};
+use clap::Args;
 
 use crate::{utils, Report, ReportDependencyEntry};
 

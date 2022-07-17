@@ -1,6 +1,6 @@
 [package]
 name = "cargo-unused-features"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2021"
 description = "Find unused enabled feature flags and prune them."
 authors = ["T. Post"]
@@ -17,8 +17,8 @@ categories = ["command-line-utilities", "command-line-interface", "development-t
 serde_json = { version="1.0", default-features = false}
 cargo = { version="0.63.1", default-features = false}
 cargo_toml= { version="0.11.5", default-features = false }
-toml= { version="0.5.9" , default-features = false }
-serde= { version="1.0" , default-features = false }
+toml= { version="0.5.9", default-features = false }
+serde= { version="1.0", default-features = false }
 cargo_metadata = {version="0.15.0", default-features = false }
 toml_edit = {  version = "0.14.4", default-features = false }
 anyhow = {version = "1.0.58", default-features = false }
@@ -27,5 +27,5 @@ log = { version = "0.4", default-features = false }
 env_logger= { version = "0.9", default-features = false }
 
 [[bin]]
-name = "cargo-unused-features"
+name = "unused-features"
 path = "src/main.rs"

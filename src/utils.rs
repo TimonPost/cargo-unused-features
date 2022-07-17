@@ -15,7 +15,7 @@ pub fn initialize_logger(log_level: Option<String>) {
     };
 
     env_logger::builder()
+        .filter_module("unused_features", log_level)
         .filter_module("cargo::core", LevelFilter::Error)
-        .filter_module("cargo_unused_features", log_level)
         .init();
 }

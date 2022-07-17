@@ -4,10 +4,10 @@ use crate::{
     cargo_project::CargoProject, create_dependencies::CrateDependencies,
     feature_buffer::DependencyFeaturePermutator, report::WorkspaceCrate, utils, Report,
 };
-use clap::{Parser, Args};
+use clap::Args;
 
 /// Analyzes the workspace for unused, but, enabled feature flags.
-#[derive(Args,Debug, Clone, Default)]
+#[derive(Args, Debug, Clone, Default)]
 #[clap(author, version)]
 #[clap(setting = clap::AppSettings::DeriveDisplayOrder)]
 pub struct AnalyzeCommand {
@@ -58,7 +58,7 @@ impl AnalyzeCommand {
     pub fn execute(mut self) -> anyhow::Result<()> {
         utils::initialize_logger(self.log_level.clone());
 
-        let current_exe = std::env::current_exe()?.parent().unwrap().to_owned();
+        let current_exe = std::env::current_dir()?;
         let workspace_path = self
             .workspace
             .take()
