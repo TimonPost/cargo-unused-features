@@ -24,8 +24,8 @@ impl TomlInMemory {
     /// Serializes the in memory toml to a toml formatted string.
     pub fn serialize(&self) -> anyhow::Result<String> {
         let mut toml_buffer = String::new();
-        let mut serializer = toml::ser::Serializer::new(&mut toml_buffer);
-        self.manifest.serialize(&mut serializer)?;
+        let serializer = toml::ser::Serializer::new(&mut toml_buffer);
+        self.manifest.serialize(serializer)?;
         Ok(toml_buffer)
     }
 
@@ -47,7 +47,7 @@ impl TomlInMemory {
                 let new_dependency = DependencyDetail {
                     version: Some(version.clone()),
                     features,
-                    default_features: Some(false),
+                    default_features: false,
                     ..Default::default()
                 };
                 *dependency = cargo_toml::Dependency::Detailed(new_dependency);
@@ -55,8 +55,9 @@ impl TomlInMemory {
             // Detailed dependency notation `x = { version = "1.0", features = ["a", "b"] }`
             cargo_toml::Dependency::Detailed(detailed) => {
                 detailed.features = features;
-                detailed.default_features = Some(false);
+                detailed.default_features = false;
             }
+            cargo_toml::Dependency::Inherited(_inherited) => {}
         };
 
         Ok(())

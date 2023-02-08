@@ -23,7 +23,7 @@ pub struct AnalyzeCommand {
 
     /// Number of parallel jobs to run. Defaults to the number of CPUs.
     #[clap(short = 'j', long = "jobs", value_parser)]
-    pub parallel_build_jobs: Option<u32>,
+    pub parallel_build_jobs: Option<i32>,
 
     /// Skip certain dependencies in the analysis of unused feature flags.
     #[clap(short = 's', long = "skip")]
