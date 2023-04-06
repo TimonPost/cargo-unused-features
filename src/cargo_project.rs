@@ -242,11 +242,14 @@ impl CargoProject {
                     // We replace simple notation by detailed notation to make it easier to work with.
                     cargo_toml::DependencyDetail {
                         version: Some(version),
-                        default_features: Some(true),
+                        default_features: true,
                         ..Default::default()
                     }
                 }
                 cargo_toml::Dependency::Detailed(detailed) => detailed,
+                cargo_toml::Dependency::Inherited(_inherited) => cargo_toml::DependencyDetail {
+                    ..Default::default()
+                },
             };
 
             crate_dependencies
@@ -293,7 +296,7 @@ impl CargoProject {
                 let mut permutation_features = HashSet::new();
 
                 let has_manual_selected_features = !manual_selected_features.is_empty();
-                let has_default_features = crate_dependency.default_features.unwrap_or(true);
+                let has_default_features = crate_dependency.default_features;
 
                 // Gather the features that will be applicable to removal.
                 // Feature flags might contain a collection of other features.
