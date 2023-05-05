@@ -17,9 +17,7 @@ pub use in_memory_toml::TomlInMemory;
 pub use report::{Report, ReportDependencyEntry, WorkspaceCrate};
 
 fn main() {
-    println!("A");
     let subcommand = Cargo::parse();
-    println!("B");
     match subcommand.execute() {
         Ok(_) => log::info!("Finished the process"),
         Err(e) => {
