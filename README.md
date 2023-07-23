@@ -10,7 +10,7 @@
 
 This cargo tool allows you to find and prune enabled, but, [potentially](#3-some-things-to-keep-in-mind) unused feature flags from your project.
 
-Use `unused-features --help` to fetch more details about available subcommands and their configurations.
+Use `cargo unused-features --help` to fetch more details about available subcommands and their configurations.
 
 # 1. How to use
 
@@ -22,7 +22,7 @@ Run `cargo install cargo-unused-features` or download the library and build it y
 
 ```bash
 cd C:/some_path/
-unused-features analyze
+cargo unused-features analyze
 ```
 
 After it finished running, check the `report.json` in the project directory and use this for the next two steps.
@@ -34,7 +34,7 @@ You can generate a simple HTML report from the json to make it easier to inspect
 <img src="docs/readme-1.jpg" />
 
 ```bash
-unused-features build-report --input "C:/some_path/report.json"
+cargo unused-features build-report --input "C:/some_path/report.json"
 ```
 
 After it finished running, check the `report.html` in the project directory. You can choose to manually fix your dependencies or use the command in the next step.
@@ -44,7 +44,7 @@ After it finished running, check the `report.html` in the project directory. You
 It is possible to auto-apply the findings of the first command. But keep in mind the [disclaimers](#3-some-things-to-keep-in-mind).
 
 ```bash
-unused-features prune --input "C:/some_path/report.json"
+cargo unused-features prune --input "C:/some_path/report.json"
 ```
 
 # 2. How it Works

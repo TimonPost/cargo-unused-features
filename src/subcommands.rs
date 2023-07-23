@@ -8,7 +8,7 @@ use self::{analyze::AnalyzeCommand, prune::PruneCommand, report_builder::ReportB
 
 #[derive(Parser)]
 #[clap(author, version, about, long_about = None)]
-#[clap(name = "unused-features")]
+#[clap(name = "cargo-unused-features")]
 pub enum Cargo {
     Analyze(AnalyzeCommand),
     BuildReport(ReportBuildingCommand),
