@@ -26,8 +26,6 @@ pub struct CargoProject {
     directory: Box<Path>,
     /// The absolute path of the toml file.
     toml_path: Box<Path>,
-    /// Is the toml describing a workspace.
-    is_workspace: bool,
     /// The in memory loaded toml definition that can be edited and serialized.
     in_memory_toml: TomlInMemory,
     /// Configurations.
@@ -52,13 +50,10 @@ impl CargoProject {
 
         log::debug!("Successfully parsed the toml file.");
 
-        let is_workspace = in_memory_toml.workspace.is_some();
-
         Ok(CargoProject {
             original: toml_contents,
             directory: Box::from(directory),
             toml_path: toml_path.into_boxed_path(),
-            is_workspace,
             in_memory_toml,
             config,
         })
@@ -67,11 +62,6 @@ impl CargoProject {
     /// Returns the configuration.
     pub fn config(&self) -> &AnalyzeCommand {
         &self.config
-    }
-
-    /// Returns if this toml file is a workspace.
-    pub fn is_workspace(&self) -> bool {
-        self.is_workspace
     }
 
     /// Returns a list of absolute path names to the workspace members of this toml file.

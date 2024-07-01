@@ -71,12 +71,13 @@ impl AnalyzeCommand {
 
         match CargoProject::new(crate_path, self.clone()) {
             Ok(root_toml) => {
-                if root_toml.is_workspace() {
+                let workspace_members = root_toml.workspace_members();
+                if !workspace_members.is_empty() {
                     log::debug!("Workspace detected, iterating over workspace crates...");
 
                     let mut report = Report::new("Workspace");
 
-                    for member_path in root_toml.workspace_members() {
+                    for member_path in workspace_members {
                         log::debug!("Processing '{}' crate ...", member_path.display());
 
                         match CargoProject::new(&member_path, self.clone()) {
