@@ -7,7 +7,8 @@ use clap::Args;
 
 use crate::{utils, Report, ReportDependencyEntry};
 
-/// Builds a simple HTML report from the output file of the `unused-features analyze` subcommand.
+/// Builds a simple HTML report from the output file of the `cargo unused-features analyze`
+/// subcommand.
 #[derive(Args, Debug, Clone, Default)]
 #[clap(author, version)]
 #[clap(setting = clap::AppSettings::DeriveDisplayOrder)]

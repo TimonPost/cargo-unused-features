@@ -27,5 +27,5 @@ log = { version = "0.4", default-features = false }
 env_logger= { version = "0.10", default-features = false }
 
 [[bin]]
-name = "unused-features"
+name = "cargo-unused-features"
 path = "src/main.rs"
